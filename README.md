@@ -1,7 +1,7 @@
 # Window Hunter
 
 > CLI tool to enumerate, manipulate, detect, screenshot, and monitor windows on Windows.
-> Built for learning Windows API and malware analysis techniques.
+> Built for learning Windows API
 
 ## Features
 
