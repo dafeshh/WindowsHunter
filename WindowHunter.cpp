@@ -50,6 +50,8 @@ struct Option {
 	bool Topmost = false;
 	bool List = false;
 	bool ForcePid = false;
+	bool ForceTitle = false;
+	bool ForceClass = false;
 	bool Screenshot = false;
 	bool Detect = false;
 	bool DetectDBG = false;
@@ -900,6 +902,7 @@ int wmain(int argc, wchar_t* argv[]) {
 
 			if (!StrCmpW(argv[i], L"/title")) {
 				if (i + 1 < argc) {
+					Opt.ForceTitle = true;
 					StrCpyW(Opt.Title, argv[i + 1]);
 				}
 				else {
@@ -910,6 +913,7 @@ int wmain(int argc, wchar_t* argv[]) {
 
 			if (!StrCmpW(argv[i], L"/class")) {
 				if (i + 1 < argc) {
+					Opt.ForceClass = true;
 					StrCpyW(Opt.Class, argv[i + 1]);
 				}
 				else {
@@ -955,7 +959,7 @@ int wmain(int argc, wchar_t* argv[]) {
 	bool HasAction = Opt.Hide || Opt.Show || Opt.Close || Opt.Kill || Opt.Minimize || Opt.Maximize || Opt.Restore || Opt.Disable || Opt.Enable || Opt.Flashing;
 
 	if (HasAction) {
-		if (Opt.ForcePid) {
+		if (Opt.ForcePid || Opt.ForceTitle || Opt.ForceClass) {
 			ScanTree(ROOT, &Opt, Target);
 			if (Target.empty()) {
 				std::wcout << L"No match Window found.\n";
@@ -964,7 +968,7 @@ int wmain(int argc, wchar_t* argv[]) {
 			ExectOption(&Opt, Target);
 		}
 		else
-			std::cout << "/pid is needed";
+			std::cout << "/pid, /title, /class is needed";
 	}
 
 	else if (Opt.Screenshot) {
